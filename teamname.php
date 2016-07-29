@@ -1,1 +1,1 @@
-echo "Are Team Name is Wendy's Beaver";
+echo "Our team name is Wendy's Beaver";
