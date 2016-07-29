@@ -4,33 +4,31 @@
 var countryCode = "840";
 var country="us";
 var zip;
-
 //html elements
 
 //number of dayts to forecast, 16 is the max
 var forecastLength = 2;
 
-
-$(document).ready(function getPosition() 
+$(document).ready(function getPosition()
 {
 
   // Find the longitude and latitude based on the users ip.
   var location = "http://ip-api.com/json";
 
-  $.getJSON(location, function(json) 
+  $.getJSON(location, function(json)
   {
 
     lat = json.lat;
     lon = json.lon;
 
     //Get the current weather data from the open weather API
-    $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&APPID=ccd8e53c44061ba9fa3596d8aa75cc5e", function(json) 
+    $.getJSON("http://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&APPID=ccd8e53c44061ba9fa3596d8aa75cc5e", function(json)
     {
     console.log(json);
       var country = json.sys.country;
       var city = json.name;
       var location = city + ", " + country;
-      
+
 
       //Let's see if that worked...
       console.log(city);
@@ -44,33 +42,33 @@ $(document).ready(function getPosition()
       //using the temprature converter
       var temp = json.main.temp;
       var getTemp = new convertTemp(temp);
-     
+
       console.log(getTemp.celcius());
       console.log(getTemp.frnht());
-      
+
       document.getElementById("currentTemp").innerHTML = getTemp.frnht()+"°";
       document.getElementById("currentImg").src = weatherImg(weather);
       document.getElementById("currentImg").alt = weather;
-      
+
               //the forecast
               $.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily?q='+ city +','+ country + '&cnt=' + forecastLength + '&APPID=ccd8e53c44061ba9fa3596d8aa75cc5e',function(json)
               {
-               
-                //console.log(json);  
-                
 
-                
+                //console.log(json);
+
+
+
                 //how to get a date item from the retrieved forecast list...
                 var currentForecast = json.list[1].dt;
                 var date = new convertDate(currentForecast);
-               
+
                 console.log(date.month());
                 console.log(date.date());
 
                 var temp = json.list[1].temp.day;
                 //console.log(temp);
-    
-    
+
+
               });
 
     });
@@ -104,25 +102,25 @@ $(document).ready(function getPosition()
       console.log(weather);
 
       var temp = json.main.temp;
-      
+
       //using the temprature converter
       var getTemp = new convertTemp(temp);
       console.log(getTemp.celcius());
       console.log(getTemp.frnht());
-      
+
       document.getElementById("currentTemp").innerHTML = '';
       document.getElementById("currentTemp").innerHTML = getTemp.frnht()+"°";
-  
+
       document.getElementById("currentImg").src = '';
       document.getElementById("currentImg").src = weatherImg(weather);
-      
+
       document.getElementById("currentImg").alt = '';
       document.getElementById("currentImg").alt = weather;
-      
+
       $.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily?q='+ city +','+ country + '&cnt=' + forecastLength + '&APPID=ccd8e53c44061ba9fa3596d8aa75cc5e',function(json)
        {
-        //console.log(json); 
-        
+        //console.log(json);
+
        });
     });
     }
@@ -137,7 +135,7 @@ $(document).ready(function getPosition()
     console.log(zip);
     zipcodeForecast();
   });
-  
+
   //"Use a different zip code"
 
   $("#zipTextbox").on('change keydown paste input', function()
@@ -168,27 +166,27 @@ $(document).ready(function getPosition()
       var weather = json.weather[0].description;
 
       var temp = json.main.temp;
-      
+
       //using the temprature converter
       var getTemp = new convertTemp(temp);
       console.log(getTemp.celcius());
       console.log(getTemp.frnht());
-      
+
       $.getJSON('http://api.openweathermap.org/data/2.5/forecast/daily?q='+ city +','+ country + '&cnt=' + forecastLength + '&APPID=ccd8e53c44061ba9fa3596d8aa75cc5e',function(json)
        {
-        //console.log(json); 
-        
+        //console.log(json);
+
        });
     });
    }
 
-   
+
   //converts a unix time stamp to a usable date
   function convertDate(unixDate)
   {
       var a = new Date(unixDate * 1000);
       var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-      
+
       return{
       year: function(){ return a.getFullYear();},
       month: function(){ return months[a.getMonth()];},
@@ -198,122 +196,122 @@ $(document).ready(function getPosition()
       sec: function(){ return a.getSeconds();}
       };
   }
-  
+
 
   //converts kelvin to celcius of fahrenheit
   function convertTemp(temp)
   {
       var c = Math.round((temp - 273.15));
-      
+
       return{
       celcius : function(){return c;},
       frnht : function(){return Math.round(c * 1.8 + 32);}
       };
-    
+
   }
-  
+
 
  //Gets the zip code for a specified area
   function getZip(city, state)
   {
     var zip;
-    
+
     $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + city + ',' + state + '&sensor=true', function(json)
     {
       console.log(json);
-      
+
       zip = json.results[0].address_components[4].long_name;
       console.log(zip);
-      
+
       //if the city and state are invalid, json.status = ZERO_RESULTS
-      
+
     });
-    
+
     return zip;
-    
+
   }
 
  //Corrects the spelling of a user entered city.
   function checkCity(city, state)
   {
     var c;
-    
+
     $.getJSON('https://maps.googleapis.com/maps/api/geocode/json?address=' + city + ',' + state + '&sensor=true', function(json)
     {
       console.log(json);
-      
+
       //todo
-      
+
       //if the city and state are invalid, json.status = ZERO_RESULTS
-      
+
     });
-    
+
     return c;
-    
+
   }
 
-  
+
 
 //only to be used until the images in /png are named after the weather ID codes found here: http://openweathermap.org/weather-conditions
 function weatherImg(weather)
 {
 
-  
+
   var imgName = null;
-  
-  switch (weather) 
+
+  switch (weather)
   {
-    case 'clear sky': 
+    case 'clear sky':
       {
         imgName = '../png/sunny-day.png';
         break;
       }
-      
-    case 'few clouds': 
+
+    case 'few clouds':
       {
         imgName = '../png/partialy-cloudy.png';
         break;
       }
-      
-    case 'scattered clouds': 
+
+    case 'scattered clouds':
       {
         imgName = '../png/cloudy-day.png';
         break;
       }
-     
-    case 'broken clouds': 
+
+    case 'broken clouds':
       {
         imgName = '../png/overcast-day.png';
         break;
       }
-      
-    case 'thunderstorm': 
+
+    case 'thunderstorm':
       {
         imgName = '../png/lighting.png';
         break;
       }
-      
-    case 'rain': 
+
+    case 'rain':
       {
         imgName = '../png/rainy-day.png';
         break;
       }
-      
-    case 'shower rain': 
+
+    case 'shower rain':
       {
         imgName = '../png/pour-rain.png';
         break;
       }
-      
-    case 'snow': 
+
+    case 'snow':
       {
         imgName = '../png/cold.png';
         break;
       }
-      
-      
+
+
 }
 return imgName;
-  
-  
+
+
 }
