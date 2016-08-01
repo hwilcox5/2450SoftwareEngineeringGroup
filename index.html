@@ -1,5 +1,3 @@
-
-
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
   <head>
@@ -10,27 +8,25 @@
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
 	<link rel="stylesheet" TYPE="text/css" href="css/style.css">
-
   </head>
   <body class="bg-blue">
-  
+
   <!--First Section Begin-->
 	<div class="row bg-blue fullHeight">
-		<!--Search Bars-->
+    <!--Search Bars-->
 		<div class="row text-center">
 			<div class="small-6 column">
-				<form onSubmit="googleSearch()">
+				<form onsubmit="searchGoogle();" id="googles" target="_blank" method="post">
                   <div class="row">
                     <div class="small-12 columns">
-                      <label>
-                        <input id="textbox" type="text" placeholder="Search on Google..."  />
-                      </label>
+                        <input type="text" id="searchString" placeholder="Google Search">
+                        <!--<input type="submit">-->
                   	</div>
                   </div>
                 </form>
 			</div>
 			<div class="small-6 column">
-				<form>
+	        <form>
                   <div class="row">
                     <div class="small-12 columns">
                       <label>
@@ -42,7 +38,7 @@
 			</div>
 		  </div>
 		 <!--End Search Bars-->
-		 
+
 		 <!--Start Center Image/Test-->
 		<div class="row vhCenter">
 			<div class="small-8 column text-center small-centered" id="weather">
@@ -50,7 +46,7 @@
 					<div class="column">
 						<img id="currentImg" src="" alt=""/>
 						<p id="currentTemp"></p>
-            <p class="location" name="location" id="location"></p>
+						<p class="location" name="location" id="location"></p>
 					</div>
 				</div>
 			</div>
@@ -58,7 +54,7 @@
 		<!--End Center Image/Text-->
 	</div>
 	<!--First Section End-->
-	
+
 	<!--Second Section Begin-->
 	<!--Old code
 	<div class="row bg-white fullWidth">
@@ -67,11 +63,9 @@
 			<label><h5>Location</h5>
 				<input type="text" placeholder="City, State">
 			</label>
-			
 			<label><h5>Phone</h5>
 				<input type="text" placeholder="XXX-XXX-XXXX">
 			</label>
-			
 			<label><h5>Time</h5>
 				<input type="text" placeholder="Ex: 7:00 pm -- UTC">
 			</label>
@@ -79,7 +73,7 @@
 	</div>
 	-->
 	<!--New from created by Dan -->
-	<form action="welcome.php" method="POST">
+	<form action="welcome.html" method="POST">
             <div class="row bg-white fullWidth">
                 <div class="small-6 column small-centered text-center">
                     <h3>Sign Up For Text Alerts</h3>
@@ -94,23 +88,23 @@
                     <label><h5>Email</h5>
                         <input type="text" placeholder="weather@wather.com" name="email">
                     </label>
-                    
-                  
+
                     <input id='setAlerts' type="submit" value="Submit">
                 </div>
             </div>
         </form>
 	<!--Second Section End-->
-	
+
 	<!--Javascript Includes-->
+
     <script src="https://ajax.googleapis.com/ajax/libs/dojo/1.8.4/dojo/dojo.js"></script>
     <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
     <script>src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.2/js.cookie.js"</script>
-    <script src="js/resize.js"></script>
+    <!--<script src="js/resize.js"></script>-->
     <script src="js/search.js"></script>
     <script src="js/vendor/what-input.js"></script>
     <script src="js/vendor/foundation.js"></script>
     <script src="js/app.js"></script>
-    <script>src="js/getWeather"</script>
+    <script src="js/getWeather.js"></script>
   </body>
 </html>
