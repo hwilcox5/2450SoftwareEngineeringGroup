@@ -19,10 +19,8 @@ $(document).ready(function getPosition() {
      console.log(zip + " set via cookie."); 
   } 
     
-   else
-   {
-
-  
+  else
+  {
   // Find the longitude and latitude based on the users ip.
   var location = "http://ip-api.com/json";
 
